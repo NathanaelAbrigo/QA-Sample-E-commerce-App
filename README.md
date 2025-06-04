@@ -17,6 +17,7 @@ This is a practice QA project where we:
 - **Incorporate CI/CD** so tests run automatically on GitHub whenever we push code.
 
 This will practice:
+
 ✅ Writing UI tests with Playwright  
 ✅ Running API tests using Postman + Newman  
 ✅ Integrating tests into a CI/CD pipeline (GitHub Actions)
