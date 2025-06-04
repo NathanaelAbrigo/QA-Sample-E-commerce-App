@@ -1,4 +1,5 @@
-# QA Sample E Commerce Web App - Automation Project: Playwright + Postman (Newman)
+# QA Sample E Commerce Web App
+##### Automation Project: Playwright + Postman (Newman)
 
 This project uses **Playwright** for UI testing and **Newman** (Postman’s CLI) for API testing. It also includes a simple **CI/CD setup with GitHub Actions**.
 
@@ -61,7 +62,7 @@ npm install -D newman       # Newman for API tests
 npm run test:ui
 ```
 
-#### Run API tests with Newma:
+#### Run API tests with Newman:
 ```bash
 npm run test:ui
 ```
