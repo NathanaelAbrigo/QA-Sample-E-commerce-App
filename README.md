@@ -1,1 +1,1 @@
-# Test-Suite-for-a-Sample-E-commerce-App
+# QA-Sample-E-commerce-App
