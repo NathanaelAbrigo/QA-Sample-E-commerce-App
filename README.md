@@ -10,6 +10,7 @@ This project uses **Playwright** for UI testing and **Newman** (Postman’s CLI)
 ---
 
 ## Project Structure
+```
 your-project/
 ├── tests/
 │   ├── ui/
@@ -21,7 +22,7 @@ your-project/
 └── .github/
     └── workflows/
         └── test.yml
-
+```
 
 ---
 
