@@ -1,0 +1,19 @@
+{
+	"info": {
+		"_postman_id": "5a32dde0-8fb2-4119-b77e-09d2e182fd46",
+		"name": "Ecommerce API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43591878",
+		"_collection_link": "https://nathanaelchrisabrigo.postman.co/workspace/Postman-API-Fundamentals-Studen~5dce332d-1dba-46ce-8174-eb8704a96d4d/collection/43591878-5a32dde0-8fb2-4119-b77e-09d2e182fd46?action=share&source=collection_link&creator=43591878"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
