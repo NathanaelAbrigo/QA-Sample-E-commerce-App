@@ -1,5 +1,4 @@
 # QA Sample E Commerce Web App
-##### Automation Project: Playwright + Postman (Newman)
 
 This project uses **Playwright** for UI testing and **Newman** (Postman’s CLI) for API testing. It also includes a simple **CI/CD setup with GitHub Actions**.
 
@@ -7,6 +6,20 @@ This project uses **Playwright** for UI testing and **Newman** (Postman’s CLI)
 
  ### Website to be Tested
  - https://automationexercise.com/
+
+---
+
+## 📌 Project Overview
+
+This is a practice QA project where we:
+- **Test the UI** of a demo web app (e.g., login form, navigation, form submission).
+- **Test API endpoints** (e.g., GET, POST requests for users or posts).
+- **Incorporate CI/CD** so tests run automatically on GitHub whenever we push code.
+
+This will practice:
+✅ Writing UI tests with Playwright  
+✅ Running API tests using Postman + Newman  
+✅ Integrating tests into a CI/CD pipeline (GitHub Actions)
 
 ---
 
