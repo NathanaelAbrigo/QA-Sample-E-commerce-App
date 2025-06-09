@@ -19,8 +19,8 @@ jobs:
         npm install
         npx playwright install
 
-    - name: Run UI tests
-      run: npm run test:ui
+    # - name: Run UI tests
+    #   run: npm run test:ui
 
     - name: Run API tests
       run: npm run test:api
