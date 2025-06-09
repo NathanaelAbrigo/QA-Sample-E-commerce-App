@@ -6,8 +6,7 @@ This project uses **Playwright** for UI testing and **Newman** (Postman’s CLI)
 
  ### Website to be Tested
  - https://automationexercise.com/
-
-The test cases that will be used is also from this website.
+ - The test cases that will be used is also from this website.
 ---
 
 ## 📌 Project Overview
