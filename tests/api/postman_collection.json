@@ -280,6 +280,134 @@
 			"response": []
 		},
 		{
+			"name": "API 11: POST To Create/Register User Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"API Internal Response Code is 201\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).to.eql(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"API response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"User created!\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "{{title}}",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "{{birth_date}}",
+							"type": "text"
+						},
+						{
+							"key": "birth_month",
+							"value": "{{birth_month}}",
+							"type": "text"
+						},
+						{
+							"key": "birth_year",
+							"value": "{{birth_year}}",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "{{firstname}}",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "{{lastname}}",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "{{company}}",
+							"type": "text"
+						},
+						{
+							"key": "address1",
+							"value": "{{address1}}",
+							"type": "text"
+						},
+						{
+							"key": "address2",
+							"value": "{{address2}}",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "{{country}}",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "{{zipcode}}",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "{{state}}",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "{{city}}",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "{{mobile_number}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/createAccount",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"createAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "API 7: POST To Verify Login with valid details",
 			"event": [
 				{
@@ -470,187 +598,6 @@
 			"response": []
 		},
 		{
-			"name": "API 11: POST To Create/Register User Account",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"API Internal Response Code is 201\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.responseCode).to.eql(201);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"API response message\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).to.eql(\"User created!\");\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "email",
-							"value": "{{email}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "text"
-						},
-						{
-							"key": "title",
-							"value": "{{title}}",
-							"type": "text"
-						},
-						{
-							"key": "birth_date",
-							"value": "{{birth_date}}",
-							"type": "text"
-						},
-						{
-							"key": "birth_month",
-							"value": "{{birth_month}}",
-							"type": "text"
-						},
-						{
-							"key": "birth_year",
-							"value": "{{birth_year}}",
-							"type": "text"
-						},
-						{
-							"key": "firstname",
-							"value": "{{firstname}}",
-							"type": "text"
-						},
-						{
-							"key": "lastname",
-							"value": "{{lastname}}",
-							"type": "text"
-						},
-						{
-							"key": "company",
-							"value": "{{company}}",
-							"type": "text"
-						},
-						{
-							"key": "address1",
-							"value": "{{address1}}",
-							"type": "text"
-						},
-						{
-							"key": "address2",
-							"value": "{{address2}}",
-							"type": "text"
-						},
-						{
-							"key": "country",
-							"value": "{{country}}",
-							"type": "text"
-						},
-						{
-							"key": "zipcode",
-							"value": "{{zipcode}}",
-							"type": "text"
-						},
-						{
-							"key": "state",
-							"value": "{{state}}",
-							"type": "text"
-						},
-						{
-							"key": "city",
-							"value": "{{city}}",
-							"type": "text"
-						},
-						{
-							"key": "mobile_number",
-							"value": "{{mobile_number}}",
-							"type": "text"
-						},
-						{
-							"key": "name",
-							"value": "{{name}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{baseUrl}}/api/createAccount",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"createAccount"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "API 12: DELETE METHOD To Delete User Account",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"API response code is 200\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.responseCode).eql(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"API response body contains message\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.message).eql(\"Account deleted!\");\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "email",
-							"value": "{{email}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{password}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{baseUrl}}/api/deleteAccount",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"api",
-						"deleteAccount"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "API 13: PUT METHOD To Update User Account",
 			"event": [
 				{
@@ -835,6 +782,59 @@
 							"key": "email",
 							"value": "{{email}}"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API 12: DELETE METHOD To Delete User Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"API response code is 200\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"API response body contains message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).eql(\"Account deleted!\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/deleteAccount",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"deleteAccount"
 					]
 				}
 			},
