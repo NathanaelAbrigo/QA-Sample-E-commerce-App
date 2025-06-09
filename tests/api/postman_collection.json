@@ -59,10 +59,15 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"//somehow still gets 200, decided to comment for now\r",
+							"//Still gets 200, since it is the actual HTTP status code from the server\r",
 							"// pm.test(\"Status Code is 405\", function () {\r",
 							"//     pm.response.to.have.status(405);\r",
 							"// });\r",
+							"\r",
+							"pm.test(\"API internal response code is 405\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).to.eql(405);  // Adjust based on field name\r",
+							"});\r",
 							"\r",
 							"pm.test(\"Response contains request method not supported\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
