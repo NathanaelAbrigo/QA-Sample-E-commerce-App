@@ -78,5 +78,5 @@ npm run test:ui
 
 #### Run API tests with Newman:
 ```bash
-npm run test:ui
+npm run test:api
 ```
