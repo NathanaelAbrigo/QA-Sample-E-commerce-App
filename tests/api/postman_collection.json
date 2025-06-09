@@ -309,12 +309,12 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "roadexplorer24@gmail.com",
+							"value": "{{email}}",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "NnhWRPmMa6c@r",
+							"value": "{{password}}",
 							"type": "text"
 						}
 					]
@@ -446,12 +446,12 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "roadexplorer24@gmail.com",
+							"value": "{{email}}",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "wrongpassword",
+							"value": "{{$randomPassword}}",
 							"type": "text"
 						}
 					]
@@ -464,6 +464,187 @@
 					"path": [
 						"api",
 						"verifyLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API 11: POST To Create/Register User Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"API Internal Response Code is 201\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).to.eql(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"API response message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).to.eql(\"User created!\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "{{title}}",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "{{birth_date}}",
+							"type": "text"
+						},
+						{
+							"key": "birth_month",
+							"value": "{{birth_month}}",
+							"type": "text"
+						},
+						{
+							"key": "birth_year",
+							"value": "{{birth_year}}",
+							"type": "text"
+						},
+						{
+							"key": "firstname",
+							"value": "{{firstname}}",
+							"type": "text"
+						},
+						{
+							"key": "lastname",
+							"value": "{{lastname}}",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "{{company}}",
+							"type": "text"
+						},
+						{
+							"key": "address1",
+							"value": "{{address1}}",
+							"type": "text"
+						},
+						{
+							"key": "address2",
+							"value": "{{address2}}",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "{{country}}",
+							"type": "text"
+						},
+						{
+							"key": "zipcode",
+							"value": "{{zipcode}}",
+							"type": "text"
+						},
+						{
+							"key": "state",
+							"value": "{{state}}",
+							"type": "text"
+						},
+						{
+							"key": "city",
+							"value": "{{city}}",
+							"type": "text"
+						},
+						{
+							"key": "mobile_number",
+							"value": "{{mobile_number}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/createAccount",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"createAccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API 12: DELETE METHOD To Delete User Account",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"API response code is 200\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"API response body contains message\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).eql(\"Account deleted!\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "{{email}}",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/deleteAccount",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"deleteAccount"
 					]
 				}
 			},
@@ -496,6 +677,91 @@
 		{
 			"key": "baseUrl",
 			"value": "https://automationexercise.com/",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "roadexplorer24@gmail.com",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "NnhWRPmMa6c@r",
+			"type": "string"
+		},
+		{
+			"key": "title",
+			"value": "Mr",
+			"type": "string"
+		},
+		{
+			"key": "birth_date",
+			"value": "3",
+			"type": "string"
+		},
+		{
+			"key": "birth_month",
+			"value": "June",
+			"type": "string"
+		},
+		{
+			"key": "birth_year",
+			"value": "2001",
+			"type": "string"
+		},
+		{
+			"key": "firstname",
+			"value": "Road",
+			"type": "string"
+		},
+		{
+			"key": "lastname",
+			"value": "Explorer",
+			"type": "string"
+		},
+		{
+			"key": "company",
+			"value": "ABC",
+			"type": "string"
+		},
+		{
+			"key": "address1",
+			"value": "123 somewhere",
+			"type": "string"
+		},
+		{
+			"key": "address2",
+			"value": "456 anywhere",
+			"type": "string"
+		},
+		{
+			"key": "country",
+			"value": "Singapore",
+			"type": "string"
+		},
+		{
+			"key": "zipcode",
+			"value": "1000",
+			"type": "string"
+		},
+		{
+			"key": "state",
+			"value": "Big Province",
+			"type": "string"
+		},
+		{
+			"key": "city",
+			"value": "Small City",
+			"type": "string"
+		},
+		{
+			"key": "mobile_number",
+			"value": "00000000000000",
+			"type": "string"
+		},
+		{
+			"key": "name",
+			"value": "Road Explorer",
 			"type": "string"
 		}
 	]
