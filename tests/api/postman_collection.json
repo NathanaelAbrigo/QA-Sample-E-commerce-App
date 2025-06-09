@@ -1,41 +1,85 @@
 {
-  "info": {
-    "_postman_id": "00000000-0000-0000-0000-000000000000",
-    "name": "Sample API Test - Always Pass",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "GET Post 1",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "https://jsonplaceholder.typicode.com/posts/1",
-          "protocol": "https",
-          "host": ["jsonplaceholder", "typicode", "com"],
-          "path": ["posts", "1"]
-        }
-      },
-      "response": [],
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Status code is 200\", function () {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "",
-              "pm.test(\"Response contains correct title\", function () {",
-              "    const jsonData = pm.response.json();",
-              "    pm.expect(jsonData.title).to.be.a('string');",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ]
-    }
-  ]
+	"info": {
+		"_postman_id": "5a32dde0-8fb2-4119-b77e-09d2e182fd46",
+		"name": "QA Sample E Commerce Web App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43591878",
+		"_collection_link": "https://nathanaelchrisabrigo.postman.co/workspace/Postman-API-Fundamentals-Studen~5dce332d-1dba-46ce-8174-eb8704a96d4d/collection/43591878-5a32dde0-8fb2-4119-b77e-09d2e182fd46?action=share&source=collection_link&creator=43591878"
+	},
+	"item": [
+		{
+			"name": "API 1: Get All Products List",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// ✅ Check if status code is 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// ✅ Check if the response is valid JSON\r",
+							"pm.test(\"Response is JSON\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"// ✅ Optional: Check if the response contains products\r",
+							"pm.test(\"Response contains products list\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"products\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/productsList",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"productsList"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://automationexercise.com/",
+			"type": "string"
+		}
+	]
 }
