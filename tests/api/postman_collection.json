@@ -291,7 +291,7 @@
 							"    pm.expect(jsonData.responseCode).eql(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"API response body contains bad request\", function () {\r",
+							"pm.test(\"API response body contains message\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.message).eql(\"User exists!\");\r",
 							"});"
@@ -318,6 +318,48 @@
 							"type": "text"
 						}
 					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/verifyLogin",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"verifyLogin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API 8: POST To Verify Login without email parameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"API response code is 400\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.responseCode).eql(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"API response body contains bad request\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.message).eql(\"Bad request, email or password parameter is missing in POST request.\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
 				},
 				"url": {
 					"raw": "{{baseUrl}}/api/verifyLogin",
