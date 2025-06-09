@@ -6,7 +6,6 @@ This project uses **Playwright** for UI testing and **Newman** (Postman’s CLI)
 
  ### Website to be Tested
  - https://automationexercise.com/
-
 ---
 
 ## 📌 Project Overview
@@ -78,5 +77,5 @@ npm run test:ui
 
 #### Run API tests with Newman:
 ```bash
-npm run test:ui
+npm run test:api
 ```
