@@ -154,7 +154,7 @@ test.describe.serial('Sequential test group', () => {
   });
 
   //not part of test case list.
-  test('Login and Delete Account', async ({ page }) => { 
+  test('Login and Delete Account', async ({ page }) => {
     await page.getByRole('link', { name: 'Signup / Login' }).click();
 
     //Signup / Login Page
@@ -222,6 +222,32 @@ test.describe('Parallel test group', () => {
     await page.getByRole('link', { name: ' Test Cases' }).click();
 
     await expect(page.getByRole('heading', { name: 'Test Cases', exact: true })).toBeVisible();
+  });
+
+  test('Test Case 8: Verify All Products and product detail page', async ({ page }) => {
+    await page.getByRole('link', { name: ' Products' }).click();
+
+    // Product Page
+    await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
+
+    //Check all Products if visible
+    var n = 3;
+    while (n <= 35) {
+      var element = page.locator('.features_items > div:nth-child(' + n + ')');
+      await expect(element).toBeVisible();
+      n++;
+    }
+    await page.locator('.choose > .nav > li > a').first().click();
+
+    // Product 1 Detail Page
+    await expect(page).toHaveURL('https://automationexercise.com/product_details/1');
+
+    await expect(page.getByRole('heading', { name: 'Blue Top' })).toBeVisible();
+    await expect(page.getByText('Category: Women > Tops')).toBeVisible();
+    await expect(page.getByText('Rs.')).toBeVisible();
+    await expect(page.getByText('Availability: In Stock')).toBeVisible();
+    await expect(page.getByText('Condition: New')).toBeVisible();
+    await expect(page.getByText('Brand: Polo')).toBeVisible();
   });
 });
 
