@@ -136,6 +136,23 @@ test.describe.serial('Sequential test group', () => {
     await expect(page).toHaveTitle(/Automation Exercise/);
   });
 
+  test('Test Case 5: Register User with existing email', async ({ page }) => {
+    await page.getByRole('link', { name: 'Signup / Login' }).click();
+
+    //Signup / Login Page
+    await page.getByRole('heading', { name: 'New User Signup!' }).isVisible();
+
+    await page.getByRole('textbox', { name: 'Name' }).fill(name);
+    await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill(email);
+
+    await expect(page.getByRole('button', { name: 'Signup' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Signup' })).toBeEnabled();
+    await page.getByRole('button', { name: 'Signup' }).click();
+
+    // Account Creation Page
+    await expect(page.getByText('Email Address already exist!')).toBeVisible();
+  });
+
 });
 
 
