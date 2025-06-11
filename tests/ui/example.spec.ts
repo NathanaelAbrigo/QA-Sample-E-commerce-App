@@ -270,6 +270,20 @@ test.describe('Parallel test group', () => {
 
     await expect(page.getByText('You have been successfully subscribed!')).toBeVisible();
   })
+
+  test('Test Case 11: Verify Subscription in Cart page', async ({ page }) => {
+
+    await page.getByRole('link', { name: ' Cart' }).click();
+
+    // Cart Page
+    await expect(page.getByRole('heading')).toContainText('Subscription');
+    await expect(page).toHaveURL('https://automationexercise.com/view_cart');
+
+    await page.getByRole('textbox', { name: 'Your email address' }).fill(email);
+    await page.getByRole('button', { name: '' }).click();
+
+    await expect(page.getByText('You have been successfully subscribed!')).toBeVisible();
+});
 });
 
 
