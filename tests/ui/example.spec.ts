@@ -10,6 +10,22 @@ test.beforeEach(async ({ page }) => {
 
 });
 
+var name = "Hello";
+var email = "roadexplorer24@gmail.com";
+var password = "NnhWRPmMa6c@r";
+var birthDay = '3';
+var birthMonth = '6';
+var birthYear = "2004";
+var firstName = "My Name";
+var lastName = "Surname";
+var company = "ABC";
+var address = "1000 Somewhere";
+var country = "Singapore";
+var state = "Out there";
+var city = "No where City";
+var zipcode = "9999";
+var mobileNumber = "12345456";
+
 test.describe.only('Test Case 1: Register User', () => {
   test('should register a new user', async ({ page }) => {
     await page.getByRole('link', { name: 'Signup / Login' }).click();
@@ -17,8 +33,8 @@ test.describe.only('Test Case 1: Register User', () => {
     // Signup / LoginPage
     await page.getByRole('heading', { name: 'New User Signup!' }).isVisible();
 
-    await page.getByRole('textbox', { name: 'Name' }).fill('Hello');
-    await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill('roadexplorer24@gmail.com');
+    await page.getByRole('textbox', { name: 'Name' }).fill(name);
+    await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill(email);
 
     await expect(page.getByRole('button', { name: 'Signup' })).toBeVisible();
     await expect(page.getByRole('button', { name: 'Signup' })).toBeEnabled();
@@ -28,28 +44,28 @@ test.describe.only('Test Case 1: Register User', () => {
     await page.getByText('Enter Account Information').isVisible();
 
     await page.getByRole('radio', { name: 'Mr.' }).check();
-    await page.getByRole('textbox', { name: 'Password *' }).fill('NnhWRPmMa6c@r');
-    await page.locator('#days').selectOption('3');
-    await page.locator('#months').selectOption('6');
-    await page.locator('#years').selectOption('2004');
+    await page.getByRole('textbox', { name: 'Password *' }).fill(password);
+    await page.locator('#days').selectOption(birthDay);
+    await page.locator('#months').selectOption(birthMonth);
+    await page.locator('#years').selectOption(birthYear);
     await page.getByRole('checkbox', { name: 'Sign up for our newsletter!' }).check();
     await page.getByRole('checkbox', { name: 'Receive special offers from' }).check();
-    await page.getByRole('textbox', { name: 'First name *' }).fill('My Name');
-    await page.getByRole('textbox', { name: 'Last name *' }).fill('Surname');
-    await page.getByRole('textbox', { name: 'Company', exact: true }).fill('ABC');
-    await page.getByRole('textbox', { name: 'Address * (Street address, P.' }).fill('1000 Somewhere');
-    await page.getByLabel('Country *').selectOption('Singapore');
-    await page.getByRole('textbox', { name: 'State *' }).fill('Out there');
-    await page.getByRole('textbox', { name: 'City * Zipcode *' }).fill('No where City');
-    await page.locator('#zipcode').fill('9999');
-    await page.getByRole('textbox', { name: 'Mobile Number *' }).fill('12345456');
+    await page.getByRole('textbox', { name: 'First name *' }).fill(firstName);
+    await page.getByRole('textbox', { name: 'Last name *' }).fill(lastName);
+    await page.getByRole('textbox', { name: 'Company', exact: true }).fill(company);
+    await page.getByRole('textbox', { name: 'Address * (Street address, P.' }).fill(address);
+    await page.getByLabel('Country *').selectOption(country);
+    await page.getByRole('textbox', { name: 'State *' }).fill(state);
+    await page.getByRole('textbox', { name: 'City * Zipcode *' }).fill(city);
+    await page.locator('#zipcode').fill(zipcode);
+    await page.getByRole('textbox', { name: 'Mobile Number *' }).fill(mobileNumber);
     await page.getByRole('button', { name: 'Create Account' }).click();
 
     await page.getByText('Account Created!').isVisible();
     await page.getByRole('link', { name: 'Continue' }).click();
 
     // Back to Home Page
-    await page.getByRole('heading', { name: 'Logged in as Hello' }).isVisible();
+    await page.getByRole('heading', { name: `Logged in as ${name}` }).isVisible();
 
     // Delete Account
     await page.getByRole('link', { name: 'Delete Account' }).click();
