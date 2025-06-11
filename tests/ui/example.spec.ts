@@ -170,7 +170,7 @@ test.describe.serial('Sequential test group', () => {
 
     page.once('dialog', async dialog => {
       console.log(`Dialog message: ${dialog.message()}`);
-      await dialog.accept(); 
+      await dialog.accept();
     });
 
     await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
@@ -179,14 +179,22 @@ test.describe.serial('Sequential test group', () => {
 
     // Success Message
     await expect(
-  page.locator('div').filter({
-    hasText: 'Success! Your details have been submitted successfully.'
-  }).nth(1)
-).toBeVisible();
+      page.locator('div').filter({
+        hasText: 'Success! Your details have been submitted successfully.'
+      }).nth(1)
+    ).toBeVisible();
 
     // Go back to Home Page
     await page.getByRole('link', { name: ' Home' }).click();
     await expect(page).toHaveTitle(/Automation Exercise/);
+  });
+  
+ test('Test Case 7: Verify Test Cases Page', async ({ page }) => {
+    
+    // Test Cases Page
+    await page.getByRole('link', { name: ' Test Cases' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Test Cases', exact: true })).toBeVisible();
   });
 });
 
