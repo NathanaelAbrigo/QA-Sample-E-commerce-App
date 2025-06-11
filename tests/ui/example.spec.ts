@@ -153,6 +153,33 @@ test.describe.serial('Sequential test group', () => {
     await expect(page.getByText('Email Address already exist!')).toBeVisible();
   });
 
+  //not part of test case list.
+  test('Login and Delete Account', async ({ page }) => { 
+    await page.getByRole('link', { name: 'Signup / Login' }).click();
+
+    //Signup / Login Page
+    await page.getByRole('heading', { name: 'Login to your account' }).isVisible();
+
+    await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').fill(email);
+    await page.getByRole('textbox', { name: 'Password' }).fill(password);
+
+    await expect(page.getByRole('button', { name: 'Login' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Login' })).toBeEnabled();
+    await page.getByRole('button', { name: 'Login' }).click();
+
+    // Back to Home Page
+    await expect(page).toHaveTitle(/Automation Exercise/);
+    await page.getByRole('heading', { name: `Logged in as ${name}` }).isVisible();
+
+    // Delete Account
+    await page.getByRole('link', { name: 'Delete Account' }).click();
+    await page.getByText('Account Deleted!').isVisible();
+    await page.getByRole('link', { name: 'Continue' }).click();
+  });
+});
+
+test.describe('Parallel test group', () => {
+
   test('Test Case 6: Contact Us Form', async ({ page }) => {
     await page.getByRole('link', { name: 'Contact us' }).click();
 
@@ -188,9 +215,9 @@ test.describe.serial('Sequential test group', () => {
     await page.getByRole('link', { name: ' Home' }).click();
     await expect(page).toHaveTitle(/Automation Exercise/);
   });
-  
- test('Test Case 7: Verify Test Cases Page', async ({ page }) => {
-    
+
+  test('Test Case 7: Verify Test Cases Page', async ({ page }) => {
+
     // Test Cases Page
     await page.getByRole('link', { name: ' Test Cases' }).click();
 
