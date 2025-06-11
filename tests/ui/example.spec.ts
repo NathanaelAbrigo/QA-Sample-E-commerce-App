@@ -249,6 +249,19 @@ test.describe('Parallel test group', () => {
     await expect(page.getByText('Condition: New')).toBeVisible();
     await expect(page.getByText('Brand: Polo')).toBeVisible();
   });
+
+  test('Test Case 9: Search Product', async ({ page }) => {
+    await page.getByRole('link', { name: ' Products' }).click();
+
+    // Product Page
+    await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
+    await page.getByRole('textbox', { name: 'Search Product' }).fill('Frozen Tops For Kids');
+    await page.getByRole('button', { name: '' }).click();
+
+    // Searched Product
+    await expect(page.getByRole('heading', { name: 'Searched Products' })).toBeVisible();
+    await expect(page.getByText('Frozen Tops For Kids').first()).toBeVisible();
+  })
 });
 
 
