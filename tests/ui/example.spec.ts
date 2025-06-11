@@ -153,6 +153,41 @@ test.describe.serial('Sequential test group', () => {
     await expect(page.getByText('Email Address already exist!')).toBeVisible();
   });
 
+  test('Test Case 6: Contact Us Form', async ({ page }) => {
+    await page.getByRole('link', { name: 'Contact us' }).click();
+
+    // Contact Us Page
+    await expect(page.getByRole('heading', { name: 'Get In Touch' })).toBeVisible();
+
+    await page.getByRole('textbox', { name: 'Name' }).fill(name);
+    await page.getByRole('textbox', { name: 'Email', exact: true }).fill(email);
+    await page.getByRole('textbox', { name: 'Subject' }).fill('Test Subject');
+    await page.getByRole('textbox', { name: 'Your Message Here' }).fill('This is a test message.');
+
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
+    await page.getByRole('button', { name: 'Submit' }).click();
+
+    page.once('dialog', async dialog => {
+      console.log(`Dialog message: ${dialog.message()}`);
+      await dialog.accept(); 
+    });
+
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
+    await page.getByRole('button', { name: 'Submit' }).click();
+
+    // Success Message
+    await expect(
+  page.locator('div').filter({
+    hasText: 'Success! Your details have been submitted successfully.'
+  }).nth(1)
+).toBeVisible();
+
+    // Go back to Home Page
+    await page.getByRole('link', { name: ' Home' }).click();
+    await expect(page).toHaveTitle(/Automation Exercise/);
+  });
 });
 
 
