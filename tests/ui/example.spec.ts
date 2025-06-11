@@ -262,6 +262,14 @@ test.describe('Parallel test group', () => {
     await expect(page.getByRole('heading', { name: 'Searched Products' })).toBeVisible();
     await expect(page.getByText('Frozen Tops For Kids').first()).toBeVisible();
   })
+
+  test('Test Case 10: Verify Subscription in home page', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
+    await page.getByRole('textbox', { name: 'Your email address' }).fill(email);
+    await page.getByRole('button', { name: '' }).click();
+
+    await expect(page.getByText('You have been successfully subscribed!')).toBeVisible();
+  })
 });
 
 
