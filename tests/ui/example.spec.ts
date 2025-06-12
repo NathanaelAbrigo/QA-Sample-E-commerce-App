@@ -309,6 +309,17 @@ test.describe('Parallel test group', () => {
     await expect(page.locator('#product-1')).toContainText('Rs. 500');
     await expect(page.locator('#product-2')).toContainText('Rs. 400');
   });
+
+  test('Test Case 13: Verify Product quantity in Cart', async ({ page }) => {
+    await page.locator('.choose > .nav > li > a').first().click();
+    await page.locator('#quantity').click();
+    await page.locator('#quantity').fill('4');
+    await page.getByRole('button', { name: ' Add to cart' }).click();
+    await page.getByRole('link', { name: 'View Cart' }).click();
+
+    // View Cart Page
+    await expect(page.locator('#product-1')).toContainText('4');
+  });
 });
 
 
