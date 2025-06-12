@@ -283,7 +283,32 @@ test.describe('Parallel test group', () => {
     await page.getByRole('button', { name: '' }).click();
 
     await expect(page.getByText('You have been successfully subscribed!')).toBeVisible();
-});
+  });
+
+  test('Test Case 12: Add Products in Cart', async ({ page }) => {
+
+    await page.getByRole('link', { name: ' Products' }).click();
+
+    // Product Page
+    await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
+
+    await page.locator('.productinfo > img').first().hover();
+    await page.locator('.overlay-content > .btn').first().click();
+    await page.getByRole('button', { name: 'Continue Shopping' }).click();
+    await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .productinfo > img').hover();
+    await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .product-overlay > .overlay-content > .btn').click();
+
+    // View Cart Page
+    await page.getByRole('link', { name: 'View Cart' }).click();
+    await expect(page.getByRole('row', { name: 'Product Image Blue Top Women' })).toBeVisible();
+    await expect(page.getByRole('row', { name: 'Product Image Men Tshirt Men' })).toBeVisible();
+    await expect(page.locator('#product-1')).toContainText('Rs. 500');
+    await expect(page.locator('#product-2')).toContainText('Rs. 400');
+    await expect(page.locator('#product-1')).toContainText('1');
+    await expect(page.locator('#product-2')).toContainText('1');
+    await expect(page.locator('#product-1')).toContainText('Rs. 500');
+    await expect(page.locator('#product-2')).toContainText('Rs. 400');
+  });
 });
 
 
