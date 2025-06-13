@@ -323,6 +323,73 @@ test.describe.serial('Sequential test group', () => {
     await page.getByText('Account Deleted!').isVisible();
     await page.getByRole('link', { name: 'Continue' }).click({ force: true });
   });
+
+  test('Test Case 15: Place Order: Register before Checkout', async ({ page }) => {
+    await page.getByRole('link', { name: 'Signup / Login' }).click();
+
+    //Signup / Login Page
+    await page.getByRole('heading', { name: 'Login to your account' }).isVisible();
+    await registerUser(page, {
+      name,
+      email,
+      title,
+      password,
+      birthDay,
+      birthMonth,
+      birthYear,
+      firstName,
+      lastName,
+      company,
+      address,
+      country,
+      state,
+      city,
+      zipcode,
+      mobileNumber
+    });
+
+    // Back to Home Page
+    await page.locator('.choose > .nav > li > a').first().click();
+    await page.getByRole('button', { name: ' Add to cart' }).click();
+    await page.getByRole('button', { name: 'Continue Shopping' }).click();
+
+    // View Cart Page
+    await page.getByRole('link', { name: ' Cart' }).click();
+    await page.getByText('Proceed To Checkout').click();
+
+    // Checkout Page
+    await expect(page.locator('#address_delivery')).toContainText(`${title} ${firstName} ${lastName}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${company}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${address}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${city} ${state} ${zipcode}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${mobileNumber}`);
+    await page.locator('textarea[name="message"]').fill('Cash on Delivery');
+
+    const placeOrderLink = page.locator('a.check_out', { hasText: 'Place Order' });
+    await placeOrderLink.waitFor({ state: 'visible' });
+    await placeOrderLink.click();
+
+    // Payment Page
+    await fillPaymentForm(page, {
+      nameOnCard: firstName,
+      cardNumber: '1111111111111111111',
+      cvc: '123',
+      mm: '99',
+      yyyy: '9999'
+    });
+
+    // Confirmation Page
+    await expect(page).toHaveURL(/payment_done/, { timeout: 20000 });
+    await expect(page.locator('#form')).toContainText('Order Placed!');
+    await expect(page.locator('#form')).toContainText('Congratulations! Your order has been confirmed!');
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true });
+
+    // Back to Home Page
+    await expect(page).toHaveURL('https://automationexercise.com/');
+    await page.getByRole('link', { name: 'Delete Account' }).click();
+    await page.getByText('Account Deleted!').isVisible();
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true });
+  });
 });
 
 test.describe('Parallel test group', () => {
