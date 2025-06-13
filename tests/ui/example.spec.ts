@@ -29,7 +29,7 @@ var mobileNumber = "12345456";
 
 // .serial for sequencial execution
 test.describe.serial('Sequential test group', () => {
-/*
+
   test('Test Case 1: Register User', async ({ page }) => {
     await page.getByRole('link', { name: 'Signup / Login' }).click();
 
@@ -46,7 +46,7 @@ test.describe.serial('Sequential test group', () => {
     // Account Creation Page
     await page.getByText('Enter Account Information').isVisible();
 
-    await page.getByRole('radio', { name: 'Mr.' }).check();
+    await page.getByRole('radio', { name: title }).check();
     await page.getByRole('textbox', { name: 'Password *' }).fill(password);
     await page.locator('#days').selectOption(birthDay);
     await page.locator('#months').selectOption(birthMonth);
@@ -179,7 +179,7 @@ test.describe.serial('Sequential test group', () => {
     await page.getByText('Account Deleted!').isVisible();
     await page.getByRole('link', { name: 'Continue' }).click();
   });
-*/
+
   test('Test Case 14: Place Order: Register while Checkout', async ({ page }) => {
     await page.locator('.choose > .nav > li > a').first().click();
     await page.getByRole('button', { name: ' Add to cart' }).click();
@@ -285,7 +285,7 @@ test.describe.serial('Sequential test group', () => {
     await page.getByRole('link', { name: 'Continue' }).click();
   });
 });
-/*
+
 test.describe('Parallel test group', () => {
 
   test('Test Case 6: Contact Us Form', async ({ page }) => {
@@ -430,4 +430,4 @@ test.describe('Parallel test group', () => {
   });
 });
 
-*/
+
