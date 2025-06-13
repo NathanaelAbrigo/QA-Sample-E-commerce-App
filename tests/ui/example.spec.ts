@@ -420,7 +420,7 @@ test.describe.serial('Sequential test group', () => {
 
     // Back to Home Page
     await expect(page).toHaveURL('https://automationexercise.com/');
-    await page.getByRole('link', { name: 'Delete Account' }).click({  timeout: 10000 });
+    await page.getByRole('link', { name: 'Delete Account' }).click({ timeout: 10000 });
     await page.getByText('Account Deleted!').isVisible();
     await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
@@ -568,6 +568,19 @@ test.describe('Parallel test group', () => {
 
     // View Cart Page
     await expect(page.locator('#product-1')).toContainText('4');
+  });
+
+  test('Test Case 17: Remove Products From Cart', async ({ page }) => {
+    await page.locator('.productinfo > img').first().hover();
+    await page.locator('.overlay-content > .btn').first().click();
+    await page.getByRole('button', { name: 'Continue Shopping' }).click();
+    await page.getByRole('link', { name: ' Cart' }).click();
+
+    // View Cart Page
+    await expect(page.getByText('Home Shopping Cart Proceed To')).toBeVisible();
+    await page.locator('a.cart_quantity_delete[data-product-id="1"]').click();
+    await expect(page.locator('#empty_cart')).toBeVisible();
+    await expect(page.locator('#empty_cart')).toContainText('Cart is empty! Click here to buy products.');
   });
 });
 
