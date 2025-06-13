@@ -27,47 +27,120 @@ var city = "No where City";
 var zipcode = "9999";
 var mobileNumber = "12345456";
 
+async function registerUser(page, {
+  name,
+  email,
+  title,
+  password,
+  birthDay,
+  birthMonth,
+  birthYear,
+  firstName,
+  lastName,
+  company,
+  address,
+  country,
+  state,
+  city,
+  zipcode,
+  mobileNumber
+}) {
+  // Signup / LoginPage
+  await page.getByRole('heading', { name: 'New User Signup!' }).isVisible();
+  await page.getByRole('textbox', { name: 'Name' }).fill(name);
+  await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill(email);
+
+  await expect(page.getByRole('button', { name: 'Signup' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Signup' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Signup' }).click();
+
+  // Account Creation Page
+  await page.getByText('Enter Account Information').isVisible();
+  await page.getByRole('radio', { name: title }).check();
+  await page.getByRole('textbox', { name: 'Password *' }).fill(password);
+  await page.locator('#days').selectOption(birthDay);
+  await page.locator('#months').selectOption(birthMonth);
+  await page.locator('#years').selectOption(birthYear);
+  await page.getByRole('checkbox', { name: 'Sign up for our newsletter!' }).check();
+  await page.getByRole('checkbox', { name: 'Receive special offers from' }).check();
+  await page.getByRole('textbox', { name: 'First name *' }).fill(firstName);
+  await page.getByRole('textbox', { name: 'Last name *' }).fill(lastName);
+  await page.getByRole('textbox', { name: 'Company', exact: true }).fill(company);
+  await page.getByRole('textbox', { name: 'Address * (Street address, P.' }).fill(address);
+  await page.getByLabel('Country *').selectOption(country);
+  await page.getByRole('textbox', { name: 'State *' }).fill(state);
+  await page.getByRole('textbox', { name: 'City' }).fill(city);
+  await page.locator('#zipcode').fill(zipcode);
+  await page.getByRole('textbox', { name: 'Mobile Number *' }).fill(mobileNumber);
+  await page.getByRole('button', { name: 'Create Account' }).click();
+
+  await expect(page).toHaveURL('https://automationexercise.com/account_created');
+  await page.getByText('Account Created!').isVisible();
+  await page.getByRole('link', { name: 'Continue' }).click({ force: true });
+}
+
+async function fillPaymentForm(page, {
+  nameOnCard,
+  cardNumber,
+  cvc,
+  mm,
+  yyyy
+}) {
+  // Wait for and fill "Name on Card"
+  const nameInput = page.locator('input[name="name_on_card"]');
+  await nameInput.waitFor({ state: 'visible' });
+  await nameInput.fill(nameOnCard);
+
+  // Wait for and fill "Card Number"
+  const cardNumberInput = page.locator('input[name="card_number"]');
+  await cardNumberInput.waitFor({ state: 'visible' });
+  await cardNumberInput.fill(cardNumber);
+
+  // Wait for and fill "CVC"
+  const cvcInput = page.getByRole('textbox', { name: 'ex.' });
+  await cvcInput.waitFor({ state: 'visible' });
+  await cvcInput.fill(cvc);
+
+  // Wait for and fill "MM"
+  const mmInput = page.getByRole('textbox', { name: 'MM' });
+  await mmInput.waitFor({ state: 'visible' });
+  await mmInput.fill(mm);
+
+  // Wait for and fill "YYYY"
+  const yyyyInput = page.getByRole('textbox', { name: 'YYYY' });
+  await yyyyInput.waitFor({ state: 'visible' });
+  await yyyyInput.fill(yyyy);
+
+  // Wait for and click the "Pay and Confirm Order" button
+  const payButton = page.getByRole('button', { name: 'Pay and Confirm Order' });
+  await payButton.waitFor({ state: 'visible' });
+  await payButton.click();
+}
+
 // .serial for sequencial execution
 test.describe.serial('Sequential test group', () => {
 
   test('Test Case 1: Register User', async ({ page }) => {
     await page.getByRole('link', { name: 'Signup / Login' }).click();
 
-    // Signup / LoginPage
-    await page.getByRole('heading', { name: 'New User Signup!' }).isVisible();
-
-    await page.getByRole('textbox', { name: 'Name' }).fill(name);
-    await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill(email);
-
-    await expect(page.getByRole('button', { name: 'Signup' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Signup' })).toBeEnabled();
-    await page.getByRole('button', { name: 'Signup' }).click();
-
-    // Account Creation Page
-    await page.getByText('Enter Account Information').isVisible();
-
-    await page.getByRole('radio', { name: title }).check();
-    await page.getByRole('textbox', { name: 'Password *' }).fill(password);
-    await page.locator('#days').selectOption(birthDay);
-    await page.locator('#months').selectOption(birthMonth);
-    await page.locator('#years').selectOption(birthYear);
-    await page.getByRole('checkbox', { name: 'Sign up for our newsletter!' }).check();
-    await page.getByRole('checkbox', { name: 'Receive special offers from' }).check();
-    await page.getByRole('textbox', { name: 'First name *' }).fill(firstName);
-    await page.getByRole('textbox', { name: 'Last name *' }).fill(lastName);
-    await page.getByRole('textbox', { name: 'Company', exact: true }).fill(company);
-    await page.getByRole('textbox', { name: 'Address * (Street address, P.' }).fill(address);
-    await page.getByLabel('Country *').selectOption(country);
-    await page.getByRole('textbox', { name: 'State *' }).fill(state);
-    await page.getByRole('textbox', { name: 'City' }).fill(city);
-    await page.locator('#zipcode').fill(zipcode);
-
-    await page.getByRole('textbox', { name: 'Mobile Number *' }).fill(mobileNumber);
-    await page.getByRole('button', { name: 'Create Account' }).click();
-
-    await expect(page).toHaveURL('https://automationexercise.com/account_created');
-    await page.getByText('Account Created!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click({ force: true });
+    await registerUser(page, {
+      name,
+      email,
+      title,
+      password,
+      birthDay,
+      birthMonth,
+      birthYear,
+      firstName,
+      lastName,
+      company,
+      address,
+      country,
+      state,
+      city,
+      zipcode,
+      mobileNumber
+    });
 
     // Back to Home Page
     await page.getByRole('heading', { name: `Logged in as ${name}` }).isVisible();
@@ -191,35 +264,24 @@ test.describe.serial('Sequential test group', () => {
     await page.getByText('Proceed To Checkout').click();
     await page.getByRole('link', { name: 'Register / Login' }).click();
 
-    // Signup / Login Page
-    await page.getByRole('textbox', { name: 'Name' }).fill(name);
-    await page.locator('form').filter({ hasText: 'Signup' }).getByPlaceholder('Email Address').fill(email);
-
-    await expect(page.getByRole('button', { name: 'Signup' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Signup' })).toBeEnabled();
-    await page.getByRole('button', { name: 'Signup' }).click();
-
-    // Account Creation Page
-    await page.getByRole('radio', { name: title }).check();
-    await page.getByRole('textbox', { name: 'Password *' }).fill(password);
-    await page.locator('#days').selectOption(birthDay);
-    await page.locator('#months').selectOption(birthMonth);
-    await page.locator('#years').selectOption(birthYear);
-    await page.getByRole('checkbox', { name: 'Sign up for our newsletter!' }).check();
-    await page.getByRole('checkbox', { name: 'Receive special offers from' }).check();
-    await page.getByRole('textbox', { name: 'First name *' }).fill(firstName);
-    await page.getByRole('textbox', { name: 'Last name *' }).fill(lastName);
-    await page.getByRole('textbox', { name: 'Company', exact: true }).fill(company);
-    await page.getByRole('textbox', { name: 'Address * (Street address, P.' }).fill(address);
-    await page.getByLabel('Country *').selectOption(country);
-    await page.getByRole('textbox', { name: 'State *' }).fill(state);
-    await page.getByRole('textbox', { name: 'City * Zipcode *' }).fill(city);
-    await page.locator('#zipcode').fill(zipcode);
-    await page.getByRole('textbox', { name: 'Mobile Number *' }).fill(mobileNumber);
-    await page.getByRole('button', { name: 'Create Account' }).click();
-
-    await page.getByText('Account Created!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click();
+    await registerUser(page, {
+      name,
+      email,
+      title,
+      password,
+      birthDay,
+      birthMonth,
+      birthYear,
+      firstName,
+      lastName,
+      company,
+      address,
+      country,
+      state,
+      city,
+      zipcode,
+      mobileNumber
+    });
 
     // Back to Home Page
     await page.getByRole('heading', { name: `Logged in as ${name}` }).isVisible();
@@ -235,54 +297,31 @@ test.describe.serial('Sequential test group', () => {
     await expect(page.locator('#address_delivery')).toContainText(`${city} ${state} ${zipcode}`);
     await expect(page.locator('#address_delivery')).toContainText(`${mobileNumber}`);
     await page.locator('textarea[name="message"]').fill('Cash on Delivery');
-    // await page.getByRole('link', { name: 'Place Order' }).click();
 
     const placeOrderLink = page.locator('a.check_out', { hasText: 'Place Order' });
     await placeOrderLink.waitFor({ state: 'visible' });
     await placeOrderLink.click();
 
     // Payment Page
-    // Wait for and fill "Name on Card"
-    const nameInput = page.locator('input[name="name_on_card"]');
-    await nameInput.waitFor({ state: 'visible' });
-    await nameInput.fill(firstName);
-
-    // Wait for and fill "Card Number"
-    const cardNumberInput = page.locator('input[name="card_number"]');
-    await cardNumberInput.waitFor({ state: 'visible' });
-    await cardNumberInput.fill('1111111111111111111');
-
-    // Wait for and fill "CVC"
-    const cvcInput = page.getByRole('textbox', { name: 'ex.' });
-    await cvcInput.waitFor({ state: 'visible' });
-    await cvcInput.fill('123');
-
-    // Wait for and fill "MM"
-    const mmInput = page.getByRole('textbox', { name: 'MM' });
-    await mmInput.waitFor({ state: 'visible' });
-    await mmInput.fill('99');
-
-    // Wait for and fill "YYYY"
-    const yyyyInput = page.getByRole('textbox', { name: 'YYYY' });
-    await yyyyInput.waitFor({ state: 'visible' });
-    await yyyyInput.fill('9999');
-
-    // Wait for and click the "Pay and Confirm Order" button
-    const payButton = page.getByRole('button', { name: 'Pay and Confirm Order' });
-    await payButton.waitFor({ state: 'visible' });
-    await payButton.click();
+    await fillPaymentForm(page, {
+      nameOnCard: firstName,
+      cardNumber: '1111111111111111111',
+      cvc: '123',
+      mm: '99',
+      yyyy: '9999'
+    });
 
     // Confirmation Page
     await expect(page).toHaveURL(/payment_done/, { timeout: 20000 });
     await expect(page.locator('#form')).toContainText('Order Placed!');
     await expect(page.locator('#form')).toContainText('Congratulations! Your order has been confirmed!');
-    await page.getByRole('link', { name: 'Continue' }).click();
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true });
 
     // Back to Home Page
     await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click();
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true });
   });
 });
 
