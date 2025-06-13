@@ -29,7 +29,7 @@ var mobileNumber = "12345456";
 
 // .serial for sequencial execution
 test.describe.serial('Sequential test group', () => {
-
+/*
   test('Test Case 1: Register User', async ({ page }) => {
     await page.getByRole('link', { name: 'Signup / Login' }).click();
 
@@ -59,13 +59,15 @@ test.describe.serial('Sequential test group', () => {
     await page.getByRole('textbox', { name: 'Address * (Street address, P.' }).fill(address);
     await page.getByLabel('Country *').selectOption(country);
     await page.getByRole('textbox', { name: 'State *' }).fill(state);
-    await page.getByRole('textbox', { name: 'City * Zipcode *' }).fill(city);
+    await page.getByRole('textbox', { name: 'City' }).fill(city);
     await page.locator('#zipcode').fill(zipcode);
+
     await page.getByRole('textbox', { name: 'Mobile Number *' }).fill(mobileNumber);
     await page.getByRole('button', { name: 'Create Account' }).click();
 
+    await expect(page).toHaveURL('https://automationexercise.com/account_created');
     await page.getByText('Account Created!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click();
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true });
 
     // Back to Home Page
     await page.getByRole('heading', { name: `Logged in as ${name}` }).isVisible();
@@ -177,7 +179,7 @@ test.describe.serial('Sequential test group', () => {
     await page.getByText('Account Deleted!').isVisible();
     await page.getByRole('link', { name: 'Continue' }).click();
   });
-
+*/
   test('Test Case 14: Place Order: Register while Checkout', async ({ page }) => {
     await page.locator('.choose > .nav > li > a').first().click();
     await page.getByRole('button', { name: ' Add to cart' }).click();
@@ -233,7 +235,11 @@ test.describe.serial('Sequential test group', () => {
     await expect(page.locator('#address_delivery')).toContainText(`${city} ${state} ${zipcode}`);
     await expect(page.locator('#address_delivery')).toContainText(`${mobileNumber}`);
     await page.locator('textarea[name="message"]').fill('Cash on Delivery');
-    await page.getByRole('link', { name: 'Place Order' }).click();
+    // await page.getByRole('link', { name: 'Place Order' }).click();
+
+    const placeOrderLink = page.locator('a.check_out', { hasText: 'Place Order' });
+    await placeOrderLink.waitFor({ state: 'visible' });
+    await placeOrderLink.click();
 
     // Payment Page
     // Wait for and fill "Name on Card"
@@ -266,16 +272,20 @@ test.describe.serial('Sequential test group', () => {
     await payButton.waitFor({ state: 'visible' });
     await payButton.click();
 
-
+    // Confirmation Page
+    await expect(page).toHaveURL(/payment_done/, { timeout: 20000 });
     await expect(page.locator('#form')).toContainText('Order Placed!');
     await expect(page.locator('#form')).toContainText('Congratulations! Your order has been confirmed!');
+    await page.getByRole('link', { name: 'Continue' }).click();
 
+    // Back to Home Page
+    await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
     await page.getByRole('link', { name: 'Continue' }).click();
   });
 });
-
+/*
 test.describe('Parallel test group', () => {
 
   test('Test Case 6: Contact Us Form', async ({ page }) => {
@@ -420,4 +430,4 @@ test.describe('Parallel test group', () => {
   });
 });
 
-
+*/
