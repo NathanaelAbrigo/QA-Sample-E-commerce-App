@@ -283,7 +283,7 @@ test.describe.serial('Sequential test group', () => {
     await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+    //await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
 
 
@@ -355,7 +355,7 @@ test.describe.serial('Sequential test group', () => {
     await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+    //await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
 
   test('Test Case 15: Place Order: Register before Checkout', async ({ page }) => {
@@ -422,7 +422,7 @@ test.describe.serial('Sequential test group', () => {
     await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click({ timeout: 10000 });
     await page.getByText('Account Deleted!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+    //await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
 
 });
@@ -581,6 +581,17 @@ test.describe('Parallel test group', () => {
     await page.locator('a.cart_quantity_delete[data-product-id="1"]').click();
     await expect(page.locator('#empty_cart')).toBeVisible();
     await expect(page.locator('#empty_cart')).toContainText('Cart is empty! Click here to buy products.');
+  });
+
+  test('Test Case 18: View Category Products', async ({ page }) => {
+    await expect(page.locator('div').filter({ hasText: 'Category Women Dress Tops' }).nth(2)).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Category' })).toBeVisible();
+    await page.getByRole('link', { name: ' Women' }).click();
+    await page.getByRole('link', { name: 'Dress' }).click();
+    await expect(page.locator('section')).toContainText('Women - Dress Products');
+    await page.getByRole('link', { name: ' Men' }).click();
+    await page.getByRole('link', { name: 'Tshirts' }).click();
+    await expect(page.locator('section')).toContainText('Men - Tshirts Products');
   });
 });
 
