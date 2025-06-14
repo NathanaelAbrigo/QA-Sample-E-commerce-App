@@ -613,9 +613,20 @@ test.describe('Parallel test group', () => {
     await page.getByRole('textbox', { name: 'Email Address', exact: true }).fill(email);
     await page.getByRole('textbox', { name: 'Add Review Here!' }).fill('My product review');
     await page.getByRole('button', { name: 'Submit' }).click();
-    
+
     await expect(page.getByText('Thank you for your review.')).toBeVisible();
   });
+
+  test('Test Case 22: Add to cart from Recommended items', async ({ page }) => {
+     await expect(page.getByRole('heading', { name: 'recommended items' })).toBeVisible();
+  await expect(page.locator('body')).toContainText('recommended items');
+  await expect(page.locator('#recommended-item-carousel')).toContainText('Stylish Dress');
+  
+  await page.locator('div:nth-child(2) > div > .product-image-wrapper > .single-products > .productinfo > .btn').first().click();
+  await page.getByRole('link', { name: 'View Cart' }).click();
+  await expect(page.getByRole('row', { name: 'Product Image Stylish Dress' })).toBeVisible();
+  });
+
 });
 
 
