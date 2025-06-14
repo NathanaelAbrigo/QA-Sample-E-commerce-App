@@ -634,6 +634,12 @@ test.describe('Parallel test group', () => {
     await expect(page.locator('#slider-carousel')).toContainText('Full-Fledged practice website for Automation Engineers');
   });
 
+  test('Test Case 26: Verify Scroll Up without \'Arrow\' button and Scroll Down functionality', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
+    
+    await expect(page.locator('#slider-carousel')).toContainText('Full-Fledged practice website for Automation Engineers');
+  });
+
 });
 
 
