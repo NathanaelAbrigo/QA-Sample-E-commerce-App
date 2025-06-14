@@ -545,7 +545,7 @@ test.describe('Parallel test group', () => {
     await page.locator('.overlay-content > .btn').first().click();
     await page.getByRole('button', { name: 'Continue Shopping' }).click();
     await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .productinfo > img').hover();
-    await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .product-overlay > .overlay-content > .btn').click();
+    await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .product-overlay > .overlay-content > .btn').click({ force: true });
 
     // View Cart Page
     await page.getByRole('link', { name: 'View Cart' }).click();
@@ -636,7 +636,7 @@ test.describe('Parallel test group', () => {
 
   test('Test Case 26: Verify Scroll Up without \'Arrow\' button and Scroll Down functionality', async ({ page }) => {
     await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
-    
+
     await expect(page.locator('#slider-carousel')).toContainText('Full-Fledged practice website for Automation Engineers');
   });
 
