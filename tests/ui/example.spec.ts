@@ -283,7 +283,7 @@ test.describe.serial('Sequential test group', () => {
     await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
-    //await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
 
 
@@ -355,7 +355,7 @@ test.describe.serial('Sequential test group', () => {
     await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
-    //await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
 
   test('Test Case 15: Place Order: Register before Checkout', async ({ page }) => {
@@ -422,7 +422,7 @@ test.describe.serial('Sequential test group', () => {
     await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click({ timeout: 10000 });
     await page.getByText('Account Deleted!').isVisible();
-    //await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
 
 });
@@ -592,6 +592,29 @@ test.describe('Parallel test group', () => {
     await page.getByRole('link', { name: ' Men' }).click();
     await page.getByRole('link', { name: 'Tshirts' }).click();
     await expect(page.locator('section')).toContainText('Men - Tshirts Products');
+  });
+
+  test('Test Case 19: Verify All Brands', async ({ page }) => {
+    await page.getByRole('link', { name: ' Products' }).click();
+    await expect(page.getByRole('heading', { name: 'Brands' })).toBeVisible();
+    await page.getByRole('link', { name: '(6) Polo' }).click();
+    await expect(page.getByRole('heading', { name: 'Brand - Polo Products' })).toBeVisible();
+    await page.getByRole('link', { name: '(5) H&M' }).click();
+    await expect(page.getByRole('heading', { name: 'Brand - H&M Products' })).toBeVisible();
+  });
+
+  test('Test Case 21: Add review on product', async ({ page }) => {
+    await page.getByRole('link', { name: ' Products' }).click();
+    await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
+    await page.locator('.choose > .nav > li > a').first().click();
+
+    await expect(page.getByRole('link', { name: 'Write Your Review' })).toBeVisible();
+    await page.getByRole('textbox', { name: 'Your Name' }).fill(name);
+    await page.getByRole('textbox', { name: 'Email Address', exact: true }).fill(email);
+    await page.getByRole('textbox', { name: 'Add Review Here!' }).fill('My product review');
+    await page.getByRole('button', { name: 'Submit' }).click();
+    
+    await expect(page.getByText('Thank you for your review.')).toBeVisible();
   });
 });
 
