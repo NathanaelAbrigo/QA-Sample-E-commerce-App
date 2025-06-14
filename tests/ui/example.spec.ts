@@ -548,7 +548,7 @@ test.describe('Parallel test group', () => {
     await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .product-overlay > .overlay-content > .btn').click({ force: true });
 
     // View Cart Page
-    await page.getByRole('link', { name: 'View Cart' }).click();
+    await page.getByRole('link', { name: 'View Cart' }).click({ force: true });
     await expect(page.getByRole('row', { name: 'Product Image Blue Top Women' })).toBeVisible();
     await expect(page.getByRole('row', { name: 'Product Image Men Tshirt Men' })).toBeVisible();
     await expect(page.locator('#product-1')).toContainText('Rs. 500');
