@@ -237,9 +237,9 @@ test.describe.serial('Sequential test group', () => {
     await page.getByRole('button', { name: '' }).click();
 
     await expect(page.locator('body')).toContainText('Blue Top');
+    await page.locator('div.productinfo.text-center > img').hover();
     const addToCartButton = page.getByText('Add to cart').first();
     await expect(addToCartButton).toBeVisible();
-    await addToCartButton.hover();
     await page.getByText('Add to cart').nth(1).click();
 
     await page.getByRole('link', { name: 'View Cart' }).click();
@@ -702,9 +702,10 @@ test.describe('Parallel test group', () => {
     await page.getByRole('button', { name: 'Continue Shopping' }).click();
     await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .productinfo > img').hover();
     await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .product-overlay > .overlay-content > .btn').click({ force: true });
+    await expect(page.locator('#cartModal > div > div')).toBeVisible();
+    await page.getByRole('link', { name: 'View Cart' }).click({ force: true, timeout: 10000 });
 
     // View Cart Page
-    await page.getByRole('link', { name: 'View Cart' }).click({ force: true });
     await expect(page.getByRole('row', { name: 'Product Image Blue Top Women' })).toBeVisible();
     await expect(page.getByRole('row', { name: 'Product Image Men Tshirt Men' })).toBeVisible();
     await expect(page.locator('#product-1')).toContainText('Rs. 500');
