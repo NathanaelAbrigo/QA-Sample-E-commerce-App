@@ -230,6 +230,31 @@ test.describe.serial('Sequential test group', () => {
     await expect(page.getByText('Email Address already exist!')).toBeVisible();
   });
 
+  test('Test Case 20: Search Products and Verify Cart After Login', async ({ page }) => {
+    await page.getByRole('link', { name: ' Products' }).click();
+    await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
+    await page.getByRole('textbox', { name: 'Search Product' }).fill('blue top');
+    await page.getByRole('button', { name: '' }).click();
+
+    await expect(page.locator('body')).toContainText('Blue Top');
+    const addToCartButton = page.getByText('Add to cart').first();
+    await expect(addToCartButton).toBeVisible();
+    await addToCartButton.hover();
+    await page.getByText('Add to cart').nth(1).click();
+
+    await page.getByRole('link', { name: 'View Cart' }).click();
+    await expect(page.locator('#product-1')).toContainText('Blue Top');
+    await expect(page.getByRole('row', { name: 'Product Image Blue Top Women' })).toBeVisible();
+    
+    await page.getByRole('link', { name: ' Signup / Login' }).click();
+    await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').fill(email);
+    await page.getByRole('textbox', { name: 'Password' }).fill(password);
+    await page.getByRole('button', { name: 'Login' }).click();
+    await page.getByRole('link', { name: ' Cart' }).click();
+    await expect(page.locator('#product-1')).toContainText('Blue Top');
+    await expect(page.getByRole('row', { name: 'Product Image Blue Top Women' })).toBeVisible();
+  });
+
   test('Test Case 16: Place Order: Login before Checkout', async ({ page }) => {
     await page.getByRole('link', { name: 'Signup / Login' }).click();
 
