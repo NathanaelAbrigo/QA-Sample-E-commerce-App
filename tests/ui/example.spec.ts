@@ -567,8 +567,8 @@ test.describe.serial('Sequential test group', () => {
     await expect(page.locator('#form')).toContainText('Order Placed!');
     await expect(page.locator('#form')).toContainText('Congratulations! Your order has been confirmed!');
 
-    const downloadPromise = page.waitForEvent('download');
     await page.getByRole('link', { name: 'Download Invoice' }).click();
+    const downloadPromise = page.waitForEvent('download');
     const download = await downloadPromise;
 
     await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
@@ -701,7 +701,7 @@ test.describe('Parallel test group', () => {
     await page.locator('.overlay-content > .btn').first().click();
     await page.getByRole('button', { name: 'Continue Shopping' }).click();
     await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .productinfo > img').hover();
-    await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .product-overlay > .overlay-content > .btn').click({ force: true });
+    await page.locator('body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div > div:nth-child(4) > div > div.single-products > div.product-overlay > div > a').click({ force: true });
     await expect(page.locator('#cartModal > div > div')).toBeVisible();
     await page.getByRole('link', { name: 'View Cart' }).click({ force: true, timeout: 10000 });
 
