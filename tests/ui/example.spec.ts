@@ -245,7 +245,7 @@ test.describe.serial('Sequential test group', () => {
     await page.getByRole('link', { name: 'View Cart' }).click();
     await expect(page.locator('#product-1')).toContainText('Blue Top');
     await expect(page.getByRole('row', { name: 'Product Image Blue Top Women' })).toBeVisible();
-    
+
     await page.getByRole('link', { name: ' Signup / Login' }).click();
     await page.locator('form').filter({ hasText: 'Login' }).getByPlaceholder('Email Address').fill(email);
     await page.getByRole('textbox', { name: 'Password' }).fill(password);
@@ -449,6 +449,137 @@ test.describe.serial('Sequential test group', () => {
     await page.getByText('Account Deleted!').isVisible();
     await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
+
+  test('Test Case 23: Verify address details in checkout page', async ({ page }) => {
+    await page.getByRole('link', { name: 'Signup / Login' }).click();
+
+    //Signup / Login Page
+    //Signup / Login Page
+    await page.getByRole('heading', { name: 'Login to your account' }).isVisible();
+    await registerUser(page, {
+      name,
+      email,
+      title,
+      password,
+      birthDay,
+      birthMonth,
+      birthYear,
+      firstName,
+      lastName,
+      company,
+      address,
+      country,
+      state,
+      city,
+      zipcode,
+      mobileNumber
+    });
+
+    // Back to Home Page
+    await page.locator('.choose > .nav > li > a').first().click();
+    await page.getByRole('button', { name: ' Add to cart' }).click();
+    await page.getByRole('button', { name: 'Continue Shopping' }).click();
+
+    // View Cart Page
+    await page.getByRole('link', { name: ' Cart' }).click();
+    await page.getByText('Proceed To Checkout').click();
+
+    // Checkout Page
+    await expect(page.locator('#address_delivery')).toContainText(`${title} ${firstName} ${lastName}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${company}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${address}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${city} ${state} ${zipcode}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${country}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${mobileNumber}`);
+
+    await expect(page.locator('#address_invoice')).toContainText(`${title} ${firstName} ${lastName}`);
+    await expect(page.locator('#address_invoice')).toContainText(`${company}`);
+    await expect(page.locator('#address_invoice')).toContainText(`${address}`);
+    await expect(page.locator('#address_invoice')).toContainText(`${city} ${state} ${zipcode}`);
+    await expect(page.locator('#address_invoice')).toContainText(`${country}`);
+    await expect(page.locator('#address_invoice')).toContainText(`${mobileNumber}`);
+
+    await page.getByRole('link', { name: 'Delete Account' }).click();
+    await page.getByText('Account Deleted!').isVisible();
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+  });
+
+  test('Test Case 24: Download Invoice after purchase order', async ({ page }) => {
+    await page.locator('.choose > .nav > li > a').first().click();
+    await page.getByRole('button', { name: ' Add to cart' }).click();
+    await page.getByRole('button', { name: 'Continue Shopping' }).click();
+    await page.getByRole('link', { name: ' Cart' }).click();
+
+    // View Cart Page
+    await expect(page.getByText('Home Shopping Cart Proceed To')).toBeVisible();
+    await page.getByText('Proceed To Checkout').click();
+    await page.getByRole('link', { name: 'Register / Login' }).click();
+
+    await registerUser(page, {
+      name,
+      email,
+      title,
+      password,
+      birthDay,
+      birthMonth,
+      birthYear,
+      firstName,
+      lastName,
+      company,
+      address,
+      country,
+      state,
+      city,
+      zipcode,
+      mobileNumber
+    });
+
+    // Back to Home Page
+    await page.getByRole('heading', { name: `Logged in as ${name}` }).isVisible();
+    await page.getByRole('link', { name: ' Cart' }).click();
+
+    // View Cart Page
+    await page.getByText('Proceed To Checkout').click();
+
+    // Checkout Page
+    await expect(page.locator('#address_delivery')).toContainText(`${title} ${firstName} ${lastName}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${company}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${address}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${city} ${state} ${zipcode}`);
+    await expect(page.locator('#address_delivery')).toContainText(`${mobileNumber}`);
+    await page.locator('textarea[name="message"]').fill('Cash on Delivery');
+
+    const placeOrderLink = page.locator('a.check_out', { hasText: 'Place Order' });
+    await placeOrderLink.waitFor({ state: 'visible' });
+    await placeOrderLink.click();
+
+    // Payment Page
+    await fillPaymentForm(page, {
+      nameOnCard: firstName,
+      cardNumber: '1111111111111111111',
+      cvc: '123',
+      mm: '99',
+      yyyy: '9999'
+    });
+
+    // Confirmation Page
+    await expect(page).toHaveURL(/payment_done/, { timeout: 20000 });
+    await expect(page.locator('#form')).toContainText('Order Placed!');
+    await expect(page.locator('#form')).toContainText('Congratulations! Your order has been confirmed!');
+
+    const downloadPromise = page.waitForEvent('download');
+    await page.getByRole('link', { name: 'Download Invoice' }).click();
+    const download = await downloadPromise;
+
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+
+    // Back to Home Page
+    await expect(page).toHaveURL('https://automationexercise.com/');
+    await page.getByRole('link', { name: 'Delete Account' }).click();
+    await page.getByText('Account Deleted!').isVisible();
+    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
+  });
+
 
 });
 
