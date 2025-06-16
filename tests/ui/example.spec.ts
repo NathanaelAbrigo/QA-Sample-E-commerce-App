@@ -237,10 +237,10 @@ test.describe.serial('Sequential test group', () => {
     await page.getByRole('button', { name: '' }).click();
 
     await expect(page.locator('body')).toContainText('Blue Top');
-    await page.locator('div.productinfo.text-center > img').hover();
-    const addToCartButton = page.getByText('Add to cart').first();
-    await expect(addToCartButton).toBeVisible();
-    await page.getByText('Add to cart').nth(1).click();
+    await page.locator('.productinfo > img').first().hover();
+    const overlayBtn = page.locator('.overlay-content > .btn').first();
+    await overlayBtn.waitFor({ state: 'visible', timeout: 10000 }); // waits up to 10 seconds
+    await overlayBtn.click();
 
     await page.getByRole('link', { name: 'View Cart' }).click();
     await expect(page.locator('#product-1')).toContainText('Blue Top');
