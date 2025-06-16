@@ -20,8 +20,8 @@ jobs:
         npx playwright install
         npx playwright install-deps
 
-    - name: Run UI tests
-      run: npm run test:ui
-
     - name: Run API tests
       run: npm run test:api
+      
+    - name: Run UI tests
+      run: npm run test:ui
