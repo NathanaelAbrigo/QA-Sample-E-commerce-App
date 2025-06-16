@@ -599,7 +599,7 @@ test.describe('Parallel test group', () => {
       await page.getByRole('button', { name: 'Submit' }).click();
   
       page.once('dialog', async dialog => {
-        console.log(`Dialog message: ${dialog.message()}`);
+        //console.log(`Dialog message: ${dialog.message()}`);
         await dialog.accept();
       });
   
@@ -611,8 +611,6 @@ test.describe('Parallel test group', () => {
       const successDiv = page.locator('div').filter({
         hasText: 'Success! Your details have been submitted successfully.'
       }).nth(1);
-  
-  
       await expect(successDiv).toBeVisible();
   
       // Go back to Home Page
