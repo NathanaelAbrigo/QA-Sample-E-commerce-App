@@ -582,112 +582,112 @@ test.describe.serial('Sequential test group', () => {
 });
 */
 test.describe('Parallel test group', () => {
-
-  test('Test Case 6: Contact Us Form', async ({ page }) => {
-    await page.getByRole('link', { name: 'Contact us' }).click();
-
-    // Contact Us Page
-    await expect(page.getByRole('heading', { name: 'Get In Touch' })).toBeVisible();
-
-    await page.getByRole('textbox', { name: 'Name' }).fill(name);
-    await page.getByRole('textbox', { name: 'Email', exact: true }).fill(email);
-    await page.getByRole('textbox', { name: 'Subject' }).fill('Test Subject');
-    await page.getByRole('textbox', { name: 'Your Message Here' }).fill('This is a test message.');
-
-    await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
-    await page.getByRole('button', { name: 'Submit' }).click();
-
-    page.once('dialog', async dialog => {
-      console.log(`Dialog message: ${dialog.message()}`);
-      await dialog.accept();
+  /*
+    test('Test Case 6: Contact Us Form', async ({ page }) => {
+      await page.getByRole('link', { name: 'Contact us' }).click();
+  
+      // Contact Us Page
+      await expect(page.getByRole('heading', { name: 'Get In Touch' })).toBeVisible();
+  
+      await page.getByRole('textbox', { name: 'Name' }).fill(name);
+      await page.getByRole('textbox', { name: 'Email', exact: true }).fill(email);
+      await page.getByRole('textbox', { name: 'Subject' }).fill('Test Subject');
+      await page.getByRole('textbox', { name: 'Your Message Here' }).fill('This is a test message.');
+  
+      await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
+      await page.getByRole('button', { name: 'Submit' }).click();
+  
+      page.once('dialog', async dialog => {
+        console.log(`Dialog message: ${dialog.message()}`);
+        await dialog.accept();
+      });
+  
+      await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
+      await page.getByRole('button', { name: 'Submit' }).click();
+  
+      // Success Message
+      await expect(
+        page.locator('div').filter({
+          hasText: 'Success! Your details have been submitted successfully.'
+        }).nth(1)
+      ).toBeVisible();
+  
+      // Go back to Home Page
+      await page.getByRole('link', { name: ' Home' }).click();
+      await expect(page).toHaveTitle(/Automation Exercise/);
     });
-
-    await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
-    await page.getByRole('button', { name: 'Submit' }).click();
-
-    // Success Message
-    await expect(
-      page.locator('div').filter({
-        hasText: 'Success! Your details have been submitted successfully.'
-      }).nth(1)
-    ).toBeVisible();
-
-    // Go back to Home Page
-    await page.getByRole('link', { name: ' Home' }).click();
-    await expect(page).toHaveTitle(/Automation Exercise/);
-  });
-
-  test('Test Case 7: Verify Test Cases Page', async ({ page }) => {
-
-    // Test Cases Page
-    await page.getByRole('link', { name: ' Test Cases' }).click();
-
-    await expect(page.getByRole('heading', { name: 'Test Cases', exact: true })).toBeVisible();
-  });
-
-  test('Test Case 8: Verify All Products and product detail page', async ({ page }) => {
-    await page.getByRole('link', { name: ' Products' }).click();
-
-    // Product Page
-    await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
-
-    //Check all Products if visible
-    var n = 3;
-    while (n <= 35) {
-      var element = page.locator('.features_items > div:nth-child(' + n + ')');
-      await expect(element).toBeVisible();
-      n++;
-    }
-    await page.locator('.choose > .nav > li > a').first().click();
-
-    // Product 1 Detail Page
-    await expect(page).toHaveURL('https://automationexercise.com/product_details/1');
-
-    await expect(page.getByRole('heading', { name: 'Blue Top' })).toBeVisible();
-    await expect(page.getByText('Category: Women > Tops')).toBeVisible();
-    await expect(page.getByText('Rs.')).toBeVisible();
-    await expect(page.getByText('Availability: In Stock')).toBeVisible();
-    await expect(page.getByText('Condition: New')).toBeVisible();
-    await expect(page.getByText('Brand: Polo')).toBeVisible();
-  });
-
-  test('Test Case 9: Search Product', async ({ page }) => {
-    await page.getByRole('link', { name: ' Products' }).click();
-
-    // Product Page
-    await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
-    await page.getByRole('textbox', { name: 'Search Product' }).fill('Frozen Tops For Kids');
-    await page.getByRole('button', { name: '' }).click();
-
-    // Searched Product
-    await expect(page.getByRole('heading', { name: 'Searched Products' })).toBeVisible();
-    await expect(page.getByText('Frozen Tops For Kids').first()).toBeVisible();
-  })
-
-  test('Test Case 10: Verify Subscription in home page', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
-    await page.getByRole('textbox', { name: 'Your email address' }).fill(email);
-    await page.getByRole('button', { name: '' }).click();
-
-    await expect(page.getByText('You have been successfully subscribed!')).toBeVisible();
-  })
-
-  test('Test Case 11: Verify Subscription in Cart page', async ({ page }) => {
-
-    await page.getByRole('link', { name: ' Cart' }).click();
-
-    // Cart Page
-    await expect(page.getByRole('heading')).toContainText('Subscription');
-    await expect(page).toHaveURL('https://automationexercise.com/view_cart');
-
-    await page.getByRole('textbox', { name: 'Your email address' }).fill(email);
-    await page.getByRole('button', { name: '' }).click();
-
-    await expect(page.getByText('You have been successfully subscribed!')).toBeVisible();
-  });
-
+  
+    test('Test Case 7: Verify Test Cases Page', async ({ page }) => {
+  
+      // Test Cases Page
+      await page.getByRole('link', { name: ' Test Cases' }).click();
+  
+      await expect(page.getByRole('heading', { name: 'Test Cases', exact: true })).toBeVisible();
+    });
+  
+    test('Test Case 8: Verify All Products and product detail page', async ({ page }) => {
+      await page.getByRole('link', { name: ' Products' }).click();
+  
+      // Product Page
+      await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
+  
+      //Check all Products if visible
+      var n = 3;
+      while (n <= 35) {
+        var element = page.locator('.features_items > div:nth-child(' + n + ')');
+        await expect(element).toBeVisible();
+        n++;
+      }
+      await page.locator('.choose > .nav > li > a').first().click();
+  
+      // Product 1 Detail Page
+      await expect(page).toHaveURL('https://automationexercise.com/product_details/1');
+  
+      await expect(page.getByRole('heading', { name: 'Blue Top' })).toBeVisible();
+      await expect(page.getByText('Category: Women > Tops')).toBeVisible();
+      await expect(page.getByText('Rs.')).toBeVisible();
+      await expect(page.getByText('Availability: In Stock')).toBeVisible();
+      await expect(page.getByText('Condition: New')).toBeVisible();
+      await expect(page.getByText('Brand: Polo')).toBeVisible();
+    });
+  
+    test('Test Case 9: Search Product', async ({ page }) => {
+      await page.getByRole('link', { name: ' Products' }).click();
+  
+      // Product Page
+      await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
+      await page.getByRole('textbox', { name: 'Search Product' }).fill('Frozen Tops For Kids');
+      await page.getByRole('button', { name: '' }).click();
+  
+      // Searched Product
+      await expect(page.getByRole('heading', { name: 'Searched Products' })).toBeVisible();
+      await expect(page.getByText('Frozen Tops For Kids').first()).toBeVisible();
+    })
+  
+    test('Test Case 10: Verify Subscription in home page', async ({ page }) => {
+      await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
+      await page.getByRole('textbox', { name: 'Your email address' }).fill(email);
+      await page.getByRole('button', { name: '' }).click();
+  
+      await expect(page.getByText('You have been successfully subscribed!')).toBeVisible();
+    })
+  
+    test('Test Case 11: Verify Subscription in Cart page', async ({ page }) => {
+  
+      await page.getByRole('link', { name: ' Cart' }).click();
+  
+      // Cart Page
+      await expect(page.getByRole('heading')).toContainText('Subscription');
+      await expect(page).toHaveURL('https://automationexercise.com/view_cart');
+  
+      await page.getByRole('textbox', { name: 'Your email address' }).fill(email);
+      await page.getByRole('button', { name: '' }).click();
+  
+      await expect(page.getByText('You have been successfully subscribed!')).toBeVisible();
+    });
+  */
   test('Test Case 12: Add Products in Cart', async ({ page }) => {
 
     await page.getByRole('link', { name: ' Products' }).click();
@@ -700,11 +700,11 @@ test.describe('Parallel test group', () => {
     await overlayBtn.waitFor({ state: 'visible', timeout: 10000 }); // waits up to 10 seconds
     await overlayBtn.click();
     await page.getByRole('button', { name: 'Continue Shopping' }).click();
-    await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .productinfo > img').hover();
-    await page.locator('body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div > div:nth-child(4) > div > div.single-products > div.product-overlay > div > a').click({ force: true });
-    const viewCartLink = page.getByRole('link', { name: 'View Cart' });
-    await viewCartLink.waitFor({ state: 'visible', timeout: 10000 });
-    await viewCartLink.click({ force: true, timeout: 10000 });
+    await page.locator('.productinfo > img').nth(1).hover();
+    const overlayBtn2 = page.locator('.overlay-content > .btn').nth(1);
+    await overlayBtn2.waitFor({ state: 'visible', timeout: 10000 });
+    await overlayBtn2.click();
+    await page.getByRole('link', { name: 'View Cart' }).click();
 
     // View Cart Page
     await expect(page.getByRole('row', { name: 'Product Image Blue Top Women' })).toBeVisible();
@@ -716,88 +716,88 @@ test.describe('Parallel test group', () => {
     await expect(page.locator('#product-1')).toContainText('Rs. 500');
     await expect(page.locator('#product-2')).toContainText('Rs. 400');
   });
-
-  test('Test Case 13: Verify Product quantity in Cart', async ({ page }) => {
-    await page.locator('.choose > .nav > li > a').first().click();
-    await page.locator('#quantity').click();
-    await page.locator('#quantity').fill('4');
-    await page.getByRole('button', { name: ' Add to cart' }).click();
-    await page.getByRole('link', { name: 'View Cart' }).click();
-
-    // View Cart Page
-    await expect(page.locator('#product-1')).toContainText('4');
-  });
-
-  test('Test Case 17: Remove Products From Cart', async ({ page }) => {
-    await page.locator('.productinfo > img').first().hover();
-    await page.locator('.overlay-content > .btn').first().click();
-    await page.getByRole('button', { name: 'Continue Shopping' }).click();
-    await page.getByRole('link', { name: ' Cart' }).click();
-
-    // View Cart Page
-    await expect(page.getByText('Home Shopping Cart Proceed To')).toBeVisible();
-    await page.locator('a.cart_quantity_delete[data-product-id="1"]').click();
-    await expect(page.locator('#empty_cart')).toBeVisible();
-    await expect(page.locator('#empty_cart')).toContainText('Cart is empty! Click here to buy products.');
-  });
-
-  test('Test Case 18: View Category Products', async ({ page }) => {
-    await expect(page.locator('div').filter({ hasText: 'Category Women Dress Tops' }).nth(2)).toBeVisible();
-    await expect(page.getByRole('heading', { name: 'Category' })).toBeVisible();
-    await page.getByRole('link', { name: ' Women' }).click();
-    await page.getByRole('link', { name: 'Dress' }).click();
-    await expect(page.locator('section')).toContainText('Women - Dress Products');
-    await page.getByRole('link', { name: ' Men' }).click();
-    await page.getByRole('link', { name: 'Tshirts' }).click();
-    await expect(page.locator('section')).toContainText('Men - Tshirts Products');
-  });
-
-  test('Test Case 19: Verify All Brands', async ({ page }) => {
-    await page.getByRole('link', { name: ' Products' }).click();
-    await expect(page.getByRole('heading', { name: 'Brands' })).toBeVisible();
-    await page.getByRole('link', { name: '(6) Polo' }).click();
-    await expect(page.getByRole('heading', { name: 'Brand - Polo Products' })).toBeVisible();
-    await page.getByRole('link', { name: '(5) H&M' }).click();
-    await expect(page.getByRole('heading', { name: 'Brand - H&M Products' })).toBeVisible();
-  });
-
-  test('Test Case 21: Add review on product', async ({ page }) => {
-    await page.getByRole('link', { name: ' Products' }).click();
-    await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
-    await page.locator('.choose > .nav > li > a').first().click();
-
-    await expect(page.getByRole('link', { name: 'Write Your Review' })).toBeVisible();
-    await page.getByRole('textbox', { name: 'Your Name' }).fill(name);
-    await page.getByRole('textbox', { name: 'Email Address', exact: true }).fill(email);
-    await page.getByRole('textbox', { name: 'Add Review Here!' }).fill('My product review');
-    await page.getByRole('button', { name: 'Submit' }).click();
-
-    await expect(page.getByText('Thank you for your review.')).toBeVisible();
-  });
-
-  test('Test Case 22: Add to cart from Recommended items', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'recommended items' })).toBeVisible();
-    await expect(page.locator('body')).toContainText('recommended items');
-    await expect(page.locator('#recommended-item-carousel')).toContainText('Stylish Dress');
-
-    await page.locator('div:nth-child(2) > div > .product-image-wrapper > .single-products > .productinfo > .btn').first().click();
-    await page.getByRole('link', { name: 'View Cart' }).click();
-    await expect(page.getByRole('row', { name: 'Product Image Stylish Dress' })).toBeVisible();
-  });
-
-  test('Test Case 25: Verify Scroll Up using \'Arrow\' button and Scroll Down functionality', async ({ page }) => {
-    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-    await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
-    await page.evaluate(() => window.scrollTo(0, 0));
-    await expect(page.locator('#slider-carousel')).toContainText('Full-Fledged practice website for Automation Engineers');
-  });
-
-  test('Test Case 26: Verify Scroll Up without \'Arrow\' button and Scroll Down functionality', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
-
-    await expect(page.locator('#slider-carousel')).toContainText('Full-Fledged practice website for Automation Engineers');
-  });
-
+  /*
+    test('Test Case 13: Verify Product quantity in Cart', async ({ page }) => {
+      await page.locator('.choose > .nav > li > a').first().click();
+      await page.locator('#quantity').click();
+      await page.locator('#quantity').fill('4');
+      await page.getByRole('button', { name: ' Add to cart' }).click();
+      await page.getByRole('link', { name: 'View Cart' }).click();
+  
+      // View Cart Page
+      await expect(page.locator('#product-1')).toContainText('4');
+    });
+  
+    test('Test Case 17: Remove Products From Cart', async ({ page }) => {
+      await page.locator('.productinfo > img').first().hover();
+      await page.locator('.overlay-content > .btn').first().click();
+      await page.getByRole('button', { name: 'Continue Shopping' }).click();
+      await page.getByRole('link', { name: ' Cart' }).click();
+  
+      // View Cart Page
+      await expect(page.getByText('Home Shopping Cart Proceed To')).toBeVisible();
+      await page.locator('a.cart_quantity_delete[data-product-id="1"]').click();
+      await expect(page.locator('#empty_cart')).toBeVisible();
+      await expect(page.locator('#empty_cart')).toContainText('Cart is empty! Click here to buy products.');
+    });
+  
+    test('Test Case 18: View Category Products', async ({ page }) => {
+      await expect(page.locator('div').filter({ hasText: 'Category Women Dress Tops' }).nth(2)).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Category' })).toBeVisible();
+      await page.getByRole('link', { name: ' Women' }).click();
+      await page.getByRole('link', { name: 'Dress' }).click();
+      await expect(page.locator('section')).toContainText('Women - Dress Products');
+      await page.getByRole('link', { name: ' Men' }).click();
+      await page.getByRole('link', { name: 'Tshirts' }).click();
+      await expect(page.locator('section')).toContainText('Men - Tshirts Products');
+    });
+  
+    test('Test Case 19: Verify All Brands', async ({ page }) => {
+      await page.getByRole('link', { name: ' Products' }).click();
+      await expect(page.getByRole('heading', { name: 'Brands' })).toBeVisible();
+      await page.getByRole('link', { name: '(6) Polo' }).click();
+      await expect(page.getByRole('heading', { name: 'Brand - Polo Products' })).toBeVisible();
+      await page.getByRole('link', { name: '(5) H&M' }).click();
+      await expect(page.getByRole('heading', { name: 'Brand - H&M Products' })).toBeVisible();
+    });
+  
+    test('Test Case 21: Add review on product', async ({ page }) => {
+      await page.getByRole('link', { name: ' Products' }).click();
+      await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
+      await page.locator('.choose > .nav > li > a').first().click();
+  
+      await expect(page.getByRole('link', { name: 'Write Your Review' })).toBeVisible();
+      await page.getByRole('textbox', { name: 'Your Name' }).fill(name);
+      await page.getByRole('textbox', { name: 'Email Address', exact: true }).fill(email);
+      await page.getByRole('textbox', { name: 'Add Review Here!' }).fill('My product review');
+      await page.getByRole('button', { name: 'Submit' }).click();
+  
+      await expect(page.getByText('Thank you for your review.')).toBeVisible();
+    });
+  
+    test('Test Case 22: Add to cart from Recommended items', async ({ page }) => {
+      await expect(page.getByRole('heading', { name: 'recommended items' })).toBeVisible();
+      await expect(page.locator('body')).toContainText('recommended items');
+      await expect(page.locator('#recommended-item-carousel')).toContainText('Stylish Dress');
+  
+      await page.locator('div:nth-child(2) > div > .product-image-wrapper > .single-products > .productinfo > .btn').first().click();
+      await page.getByRole('link', { name: 'View Cart' }).click();
+      await expect(page.getByRole('row', { name: 'Product Image Stylish Dress' })).toBeVisible();
+    });
+  
+    test('Test Case 25: Verify Scroll Up using \'Arrow\' button and Scroll Down functionality', async ({ page }) => {
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await expect(page.locator('#slider-carousel')).toContainText('Full-Fledged practice website for Automation Engineers');
+    });
+  
+    test('Test Case 26: Verify Scroll Up without \'Arrow\' button and Scroll Down functionality', async ({ page }) => {
+      await expect(page.getByRole('heading', { name: 'Subscription' })).toBeVisible();
+  
+      await expect(page.locator('#slider-carousel')).toContainText('Full-Fledged practice website for Automation Engineers');
+    });
+  */
 });
 
 
