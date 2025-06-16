@@ -577,46 +577,51 @@ test.describe.serial('Sequential test group', () => {
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
   });
-
-
 });
 
 test.describe('Parallel test group', () => {
-  
-    test('Test Case 6: Contact Us Form', async ({ page }) => {
-      await page.getByRole('link', { name: 'Contact us' }).click();
-  
-      // Contact Us Page
-      await expect(page.getByRole('heading', { name: 'Get In Touch' })).toBeVisible();
-  
-      await page.getByRole('textbox', { name: 'Name' }).fill(name);
-      await page.getByRole('textbox', { name: 'Email', exact: true }).fill(email);
-      await page.getByRole('textbox', { name: 'Subject' }).fill('Test Subject');
-      await page.getByRole('textbox', { name: 'Your Message Here' }).fill('This is a test message.');
-  
-      await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
-      await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
-      await page.getByRole('button', { name: 'Submit' }).click();
-  
-      page.once('dialog', async dialog => {
-        //console.log(`Dialog message: ${dialog.message()}`);
-        await dialog.accept();
-      });
-  
-      await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
-      await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
-      await page.getByRole('button', { name: 'Submit' }).click();
-  
-      // Success Message
-      const successDiv = page.locator('div').filter({
-        hasText: 'Success! Your details have been submitted successfully.'
-      }).nth(1);
-      await expect(successDiv).toBeVisible();
-  
-      // Go back to Home Page
-      await page.getByRole('link', { name: ' Home' }).click();
-      await expect(page).toHaveTitle(/Automation Exercise/);
+
+  test('Test Case 6: Contact Us Form', async ({ page }) => {
+    await page.getByRole('link', { name: 'Contact us' }).click();
+
+    // Contact Us Page
+    await expect(page.getByRole('heading', { name: 'Get In Touch' })).toBeVisible();
+
+    const contactForm = page.locator('form#contact-us-form');
+    await contactForm.waitFor({ state: 'visible', timeout: 10000 });
+
+    await page.waitForTimeout(5000); 
+
+    await page.getByRole('textbox', { name: 'Name' }).fill(name);
+    await page.getByRole('textbox', { name: 'Email', exact: true }).fill(email);
+    await page.getByRole('textbox', { name: 'Subject' }).fill('Test Subject');
+    const now2 = new Date().toISOString();
+    const message = `This is a test message. Sent at ${now2}`;
+    await page.getByRole('textbox', { name: 'Your Message Here' }).fill(message);
+
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
+    await page.getByRole('button', { name: 'Submit' }).click();
+
+    page.once('dialog', async dialog => {
+      //console.log(`Dialog message: ${dialog.message()}`);
+      await dialog.accept();
     });
+
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Submit' })).toBeEnabled();
+    await page.getByRole('button', { name: 'Submit' }).click();
+
+    // Success Message
+    const successDiv = page.locator('div').filter({
+      hasText: 'Success! Your details have been submitted successfully.'
+    }).nth(1);
+    await expect(successDiv).toBeVisible();
+
+    // Go back to Home Page
+    await page.getByRole('link', { name: ' Home' }).click();
+    await expect(page).toHaveTitle(/Automation Exercise/);
+  });
   
     test('Test Case 7: Verify Test Cases Page', async ({ page }) => {
   
