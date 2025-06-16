@@ -6,13 +6,15 @@ This project uses **Playwright** for UI testing and **Newman** (Postman’s CLI)
 
  ### Website to be Tested
  - https://automationexercise.com/
+
+
 ---
 
 ## 📌 Project Overview
 
 This is a practice QA project where we:
-- **Test the UI** of a demo web app (e.g., login form, navigation, form submission).
-- **Test API endpoints** (e.g., GET, POST requests for users or posts).
+- **Test the UI** of a demo web app (e.g., login user, create account, add to cart, checkout).
+- **Test API endpoints** (e.g., GET, POST requests for users or products).
 - **Incorporate CI/CD** so tests run automatically on GitHub whenever we push code.
 
 This will practice:
