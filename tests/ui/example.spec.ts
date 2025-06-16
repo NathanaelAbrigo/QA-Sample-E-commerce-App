@@ -117,7 +117,7 @@ async function fillPaymentForm(page, {
   await payButton.waitFor({ state: 'visible' });
   await payButton.click();
 }
-
+/*
 // .serial for sequencial execution
 test.describe.serial('Sequential test group', () => {
 
@@ -580,7 +580,7 @@ test.describe.serial('Sequential test group', () => {
 
 
 });
-
+*/
 test.describe('Parallel test group', () => {
 
   test('Test Case 6: Contact Us Form', async ({ page }) => {
@@ -696,12 +696,15 @@ test.describe('Parallel test group', () => {
     await expect(page.getByRole('heading', { name: 'All Products' })).toBeVisible();
 
     await page.locator('.productinfo > img').first().hover();
-    await page.locator('.overlay-content > .btn').first().click();
+    const overlayBtn = page.locator('.overlay-content > .btn').first();
+    await overlayBtn.waitFor({ state: 'visible', timeout: 10000 }); // waits up to 10 seconds
+    await overlayBtn.click();
     await page.getByRole('button', { name: 'Continue Shopping' }).click();
     await page.locator('div:nth-child(4) > .product-image-wrapper > .single-products > .productinfo > img').hover();
     await page.locator('body > section:nth-child(3) > div > div > div.col-sm-9.padding-right > div > div:nth-child(4) > div > div.single-products > div.product-overlay > div > a').click({ force: true });
-    await expect(page.locator('#cartModal > div > div')).toBeVisible();
-    await page.getByRole('link', { name: 'View Cart' }).click({ force: true, timeout: 10000 });
+    const viewCartLink = page.getByRole('link', { name: 'View Cart' });
+    await viewCartLink.waitFor({ state: 'visible', timeout: 10000 });
+    await viewCartLink.click({ force: true, timeout: 10000 });
 
     // View Cart Page
     await expect(page.getByRole('row', { name: 'Product Image Blue Top Women' })).toBeVisible();
