@@ -62,8 +62,8 @@ async function registerUser(page, {
   await page.locator('#days').selectOption(birthDay);
   await page.locator('#months').selectOption(birthMonth);
   await page.locator('#years').selectOption(birthYear);
-  await page.getByRole('checkbox', { name: 'Sign up for our newsletter!' }).check();
-  await page.getByRole('checkbox', { name: 'Receive special offers from' }).check();
+  // await page.getByRole('checkbox', { name: 'Sign up for our newsletter!' }).check();
+  // await page.getByRole('checkbox', { name: 'Receive special offers from' }).check();
   await page.getByRole('textbox', { name: 'First name *' }).fill(firstName);
   await page.getByRole('textbox', { name: 'Last name *' }).fill(lastName);
   await page.getByRole('textbox', { name: 'Company', exact: true }).fill(company);
@@ -501,7 +501,6 @@ test.describe.serial('Sequential test group', () => {
 
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
 
   test('Test Case 24: Download Invoice after purchase order', async ({ page }) => {
@@ -567,8 +566,8 @@ test.describe.serial('Sequential test group', () => {
     await expect(page.locator('#form')).toContainText('Order Placed!');
     await expect(page.locator('#form')).toContainText('Congratulations! Your order has been confirmed!');
 
-    await page.getByRole('link', { name: 'Download Invoice' }).click();
     const downloadPromise = page.waitForEvent('download');
+    await page.getByRole('link', { name: 'Download Invoice' }).click();
     const download = await downloadPromise;
 
     await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
@@ -577,7 +576,6 @@ test.describe.serial('Sequential test group', () => {
     await expect(page).toHaveURL('https://automationexercise.com/');
     await page.getByRole('link', { name: 'Delete Account' }).click();
     await page.getByText('Account Deleted!').isVisible();
-    await page.getByRole('link', { name: 'Continue' }).click({ force: true, timeout: 10000 });
   });
 
 
